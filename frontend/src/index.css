@@ -1,0 +1,17 @@
+/* index.css */
+
+/* Basic reset */
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background-color: #f8fafc;
+  color: #111827;
+}
+
+/* Center App */
+.App {
+  text-align: center;
+  min-height: 100vh;
+  padding: 20px;
+}
