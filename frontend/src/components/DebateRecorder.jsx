@@ -1,4 +1,4 @@
-// src/components/DebateRecorder.js
+// src/components/DebateRecorder.jsx
 import React, { useState, useRef } from "react";
 
 function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
@@ -93,7 +93,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
           (speaker) => (
             <button
               key={speaker}
-              className={`px-4 py-2 rounded-lg text-white ${
+              className={`record-button px-4 py-2 rounded-lg text-white ${
                 activeSpeaker === speaker
                   ? "bg-gray-400"
                   : "bg-blue-600 hover:bg-blue-700"
@@ -126,7 +126,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
       {/* Buttons */}
       <div className="mt-4 flex gap-4 justify-center">
         <button
-          className={`px-4 py-2 rounded-lg text-white ${
+          className={`record-button px-4 py-2 rounded-lg text-white ${
             loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
           }`}
           onClick={saveTranscript}
@@ -136,7 +136,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
         </button>
 
         <button
-          className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"
+          className="record-button px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"
           onClick={clearTranscript}
         >
           🗑️ Clear
