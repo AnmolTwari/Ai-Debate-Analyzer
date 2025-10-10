@@ -113,17 +113,17 @@ app.post("/api/save-transcript", (req, res) => {
 // --------------------
 >>>>>>> 56d37f862b2d4d5a800be7fccfdbc014f220d32a
 app.get("/api/analyze-transcript", (req, res) => {
-  const { file } = req.query;
-  if (!file) return res.status(400).json({ error: "No file specified" });
+  const analyzedPath = path.join(__dirname, "data", "analyzed_transcript.json");
+  console.log("Looking for analyzed file at:", analyzedPath);
 
-  const analyzedPath = path.join(dataDir, file);
   if (!fs.existsSync(analyzedPath)) {
-    return res.status(404).json({ error: "Analyzed file not found" });
+    return res.status(404).json({ error: "No analyzed transcript yet" });
   }
 
   const analyzed = JSON.parse(fs.readFileSync(analyzedPath, "utf-8"));
   res.json(analyzed);
 });
+
 
 // --------------------
 app.listen(PORT, () => console.log(`✅ Backend running at http://localhost:${PORT}`));
