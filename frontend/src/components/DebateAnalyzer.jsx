@@ -1,4 +1,4 @@
-// src/components/DebateAnalyzer.js
+// src/components/DebateAnalyzer.jsx
 import React, { useEffect, useState } from "react";
 
 function DebateAnalyzer({ onRestart }) {

@@ -17,6 +17,7 @@ const PORT = 5000;
 const dataDir = path.join(__dirname, "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
 
+// Health check
 app.get("/", (req, res) => res.send("✅ AI Debate Analyzer backend is running!"));
 
 // --------------------
@@ -25,8 +26,10 @@ app.get("/", (req, res) => res.send("✅ AI Debate Analyzer backend is running!"
 app.post("/api/save-transcript", (req, res) => {
   try {
     const { transcript } = req.body;
-    if (!transcript || transcript.length === 0) {
-      return res.status(400).json({ error: "Transcript empty" });
+
+    // Validate payload
+    if (!transcript || !Array.isArray(transcript) || transcript.length === 0) {
+      return res.status(400).json({ error: "Transcript empty or invalid" });
     }
 
     // Validate each entry
@@ -37,7 +40,9 @@ app.post("/api/save-transcript", (req, res) => {
       }
     }
 
-    const filePath = path.join(dataDir, `transcript_${Date.now()}.json`);
+    // Save transcript file with timestamp
+    const timestamp = Date.now();
+    const filePath = path.join(dataDir, `transcript_${timestamp}.json`);
     fs.writeFileSync(filePath, JSON.stringify(transcript, null, 2));
     console.log("✅ Transcript saved:", filePath);
 
