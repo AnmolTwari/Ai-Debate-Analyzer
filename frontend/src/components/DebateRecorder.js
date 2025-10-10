@@ -13,13 +13,17 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
+    recognition.continuous = true;           // Allow continuous speech
+    recognition.interimResults = false;      // Only final results
     recognition.lang = "en-US";
 
     recognition.onresult = (event) => {
-      const text = event.results[0][0].transcript;
-      setTranscript((prev) => [...prev, { speaker, text }]);
-      setActiveSpeaker(null);
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          const text = event.results[i][0].transcript.trim();
+          setTranscript((prev) => [...prev, { speaker, text }]);
+        }
+      }
     };
 
     recognition.onerror = (err) => {
@@ -28,9 +32,20 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
       setActiveSpeaker(null);
     };
 
+    recognition.onend = () => {
+      setActiveSpeaker(null);
+      recognitionRef.current = null;
+    };
+
     recognition.start();
     recognitionRef.current = recognition;
     setActiveSpeaker(speaker);
+  };
+
+  const stopRecognition = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
   };
 
   const saveTranscript = async () => {
@@ -38,6 +53,8 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
     setLoading(true);
 
     try {
+      console.log("Transcript to save:", transcript);
+
       const response = await fetch("http://localhost:5000/api/save-transcript", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -61,9 +78,9 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
 
   return (
     <div className="p-6 text-center">
-      <h2 className="text-2xl font-bold mb-4">AI Debate Analyzer</h2>
+      <h2 className="text-2xl font-bold mb-4">🎤 AI Debate Recorder</h2>
 
-      <div className="flex justify-center gap-6 mb-6">
+      <div className="flex justify-center gap-4 mb-6">
         {["Speaker 1", "Speaker 2"].map((speaker) => (
           <button
             key={speaker}
@@ -80,9 +97,17 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
             🎙️ {speaker}
           </button>
         ))}
+        {activeSpeaker && (
+          <button
+            className="px-4 py-2 bg-red-500 text-white rounded-lg"
+            onClick={stopRecognition}
+          >
+            ⏹️ Stop Recording
+          </button>
+        )}
       </div>
 
-      <div className="bg-gray-100 p-4 rounded-lg text-left max-w-lg mx-auto">
+      <div className="bg-gray-100 p-4 rounded-lg text-left max-w-lg mx-auto mb-4">
         <h3 className="font-semibold mb-2">Transcript:</h3>
         {transcript.length === 0 ? (
           <p>No transcript yet</p>
@@ -98,7 +123,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
       </div>
 
       <button
-        className={`mt-4 px-4 py-2 rounded-lg text-white ${
+        className={`px-4 py-2 rounded-lg text-white ${
           loading ? "bg-gray-400" : "bg-purple-500"
         }`}
         onClick={saveTranscript}
