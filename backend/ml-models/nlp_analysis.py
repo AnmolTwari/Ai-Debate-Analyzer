@@ -1,15 +1,6 @@
-import sys, os, json
+import json
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer, util
-<<<<<<< HEAD
-
-if len(sys.argv) < 2:
-    print("❌ No input file provided")
-    sys.exit(1)
-
-INPUT_FILE = sys.argv[1]
-OUTPUT_FILE = os.path.join(os.path.dirname(INPUT_FILE), "analyzed_transcript.json")
-=======
 import os
 
 # -----------------------------
@@ -30,7 +21,6 @@ while True:
 # -----------------------------
 DEBATE_TOPIC = input("Enter the debate topic: ").strip()
 print(f"\nTopic set to: '{DEBATE_TOPIC}'\n")
->>>>>>> 56d37f862b2d4d5a800be7fccfdbc014f220d32a
 
 # -----------------------------
 # Collect speeches from each speaker
@@ -40,14 +30,6 @@ for i in range(1, num_speakers + 1):
     text = input(f"Enter speech for Speaker {i}: ").strip()
     transcript.append({"speaker": f"Speaker {i}", "text": text})
 
-<<<<<<< HEAD
-with open(INPUT_FILE, "r", encoding="utf-8") as f:
-    transcript = json.load(f)
-
-# Load models
-sentiment_model = pipeline("sentiment-analysis")
-emotion_model = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
-=======
 # -----------------------------
 # Load NLP models
 # -----------------------------
@@ -56,35 +38,18 @@ sentiment_model = pipeline("sentiment-analysis")
 emotion_model = pipeline(
     "text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True
 )
->>>>>>> 56d37f862b2d4d5a800be7fccfdbc014f220d32a
 semantic_model = SentenceTransformer("all-MiniLM-L6-v2")
 topic_embedding = semantic_model.encode(DEBATE_TOPIC, convert_to_tensor=True)
+print("Models loaded successfully.\n")
 
-<<<<<<< HEAD
-# Analyze transcript
-=======
 # -----------------------------
 # Analyze each transcript entry
 # -----------------------------
->>>>>>> 56d37f862b2d4d5a800be7fccfdbc014f220d32a
 for entry in transcript:
     text = entry["text"]
 
     # Sentiment
     sentiment = sentiment_model(text)[0]
-<<<<<<< HEAD
-    emotion = emotion_model(text)[0]
-    text_embedding = semantic_model.encode(text, convert_to_tensor=True)
-    similarity = util.cos_sim(text_embedding, topic_embedding).item()
-
-    entry["sentiment"] = {"label": sentiment["label"], "score": round(sentiment["score"], 2)}
-    entry["emotion"] = {"label": emotion["label"], "score": round(emotion["score"], 2)}
-    entry["relevance"] = round(similarity, 2)
-
-# Save analyzed transcript
-with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    json.dump(transcript, f, indent=2, ensure_ascii=False)
-=======
     entry["sentiment"] = {
         "label": sentiment["label"],
         "score": round(sentiment["score"], 3)
@@ -116,6 +81,5 @@ OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "analyzed_transcript.json"
 os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 with open(OUTPUT_FILE, "w") as f:
     json.dump(transcript, f, indent=2)
->>>>>>> 56d37f862b2d4d5a800be7fccfdbc014f220d32a
 
-print(f"✅ Analyzed transcript saved to: {OUTPUT_FILE}")
+print(f"✅ Analyzed transcript saved to {OUTPUT_FILE}")
