@@ -58,7 +58,7 @@ app.post("/api/save-transcript", (req, res) => {
 
     // Run Python asynchronously (background)
     const scriptPath = path.join(__dirname, "ml-models", "nlp_analysis.py");
-    const py = spawn("python", [scriptPath, filePath, analyzedFilePath]);
+const py = spawn("python", [scriptPath, filePath, analyzedFilePath]);
 
     py.stdout.on("data", (data) => {
       console.log("Python:", data.toString());
