@@ -8,36 +8,43 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
   const recognitionRef = useRef(null);
 
   const startRecognition = (speaker) => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Speech Recognition not supported in this browser.");
+    if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
+      alert("Speech Recognition not supported in this browser. Try Chrome desktop.");
       return;
     }
 
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
     recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => setActiveSpeaker(speaker);
 
     recognition.onresult = (event) => {
-      const text = event.results[0][0].transcript;
-      setTranscript((prev) => [...prev, { speaker, text }]);
+      const text = event.results[0][0].transcript.trim();
+      if (text) {
+        setTranscript((prev) => [...prev, { speaker, text }]);
+      } else {
+        alert("No speech detected. Please try again.");
+      }
       setActiveSpeaker(null);
     };
 
-    recognition.onerror = (err) => {
-      if (err.error === "no-speech") alert("No speech detected. Please try again.");
-      else console.error("Recognition error:", err);
+    recognition.onerror = (event) => {
+      console.error("Recognition error:", event.error);
+      alert(`Speech recognition error: ${event.error}`);
       setActiveSpeaker(null);
     };
 
-    recognition.start();
+    recognition.onend = () => setActiveSpeaker(null);
+
     recognitionRef.current = recognition;
-    setActiveSpeaker(speaker);
+    recognition.start();
   };
 
   const saveTranscript = async () => {
-    if (transcript.length === 0) return;
+    if (transcript.length === 0) return alert("No transcript to save.");
     setLoading(true);
 
     try {
@@ -47,16 +54,15 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
         body: JSON.stringify({ transcript }),
       });
 
-      const text = await response.text();
-      if (!response.ok) throw new Error(`HTTP ${response.status}: ${text}`);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Failed to save transcript");
 
-      const data = JSON.parse(text);
       console.log("Transcript saved:", data);
       alert("✅ Transcript saved successfully!");
-      onEndDebate(); // Move to analyzer
+      onEndDebate();
     } catch (err) {
       console.error("Error saving transcript:", err);
-      alert("❌ Failed to save transcript. Check console for details.");
+      alert(`❌ Failed to save transcript: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -73,16 +79,11 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
         <label className="font-medium mr-2">Select number of speakers:</label>
         <select
           value={numSpeakers}
-          onChange={(e) => {
-            setNumSpeakers(Number(e.target.value));
-            setTranscript([]); // reset transcript on speaker change
-          }}
+          onChange={(e) => setNumSpeakers(Number(e.target.value))}
           className="border rounded p-2"
         >
           {[2, 3, 4, 5, 6].map((n) => (
-            <option key={n} value={n}>
-              {n}
-            </option>
+            <option key={n} value={n}>{n}</option>
           ))}
         </select>
       </div>
@@ -93,13 +94,13 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
           (speaker) => (
             <button
               key={speaker}
-              className={`record-button px-4 py-2 rounded-lg text-white ${
+              onClick={() => startRecognition(speaker)}
+              disabled={activeSpeaker !== null || loading}
+              className={`px-4 py-2 rounded-lg text-white ${
                 activeSpeaker === speaker
                   ? "bg-gray-400"
                   : "bg-blue-600 hover:bg-blue-700"
               }`}
-              onClick={() => startRecognition(speaker)}
-              disabled={activeSpeaker !== null || loading}
             >
               🎙️ {speaker}
             </button>
@@ -126,18 +127,18 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
       {/* Buttons */}
       <div className="mt-4 flex gap-4 justify-center">
         <button
-          className={`record-button px-4 py-2 rounded-lg text-white ${
+          onClick={saveTranscript}
+          disabled={loading || transcript.length === 0}
+          className={`px-4 py-2 rounded-lg text-white ${
             loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
           }`}
-          onClick={saveTranscript}
-          disabled={transcript.length === 0 || loading}
         >
           {loading ? "Saving..." : "💾 Save Transcript"}
         </button>
 
         <button
-          className="record-button px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"
           onClick={clearTranscript}
+          className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"
         >
           🗑️ Clear
         </button>
