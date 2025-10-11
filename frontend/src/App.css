@@ -1,120 +1,109 @@
-/* App-specific styles */
-.gradient-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  position: relative;
-  overflow: hidden;
-}
+/* src/App.css */
 
-/* Perfect centering for all content */
-.center-content {
+/* Full-page container */
+.app-container {
+  position: relative;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  text-align: center;
+  background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4);
+  overflow: hidden;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
 }
 
-.gradient-bg::before {
-  content: '';
+/* Animated background blobs */
+.background-blobs {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-  animation: float 6s ease-in-out infinite;
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
-.gradient-bg::after {
-  content: '';
+.blob {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  animation: move 20s linear infinite;
-  pointer-events: none;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.7;
+  animation: blob 20s infinite;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+.blob.purple {
+  background-color: #d8b4fe;
+  top: -8rem;
+  right: -8rem;
 }
 
-@keyframes move {
-  0% { background-position: 0 0, 0 10px, 10px -10px, -10px 0px; }
-  100% { background-position: 20px 20px, 20px 30px, 30px 10px, 10px 20px; }
+.blob.yellow {
+  background-color: #fde68a;
+  bottom: -8rem;
+  left: -8rem;
+  animation-delay: 5s;
 }
 
-.record-button {
-  transition: all 0.2s ease-in-out;
-}
-
-.record-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.record-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.record-button:disabled:hover {
-  transform: none;
-  box-shadow: none;
-}
-
-/* Pulse animation for recording state */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-/* Glass morphism effect for main container */
-.glass-container {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-
-/* Animated blob elements */
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
+.blob.pink {
+  background-color: #f9a8d4;
+  top: 12rem;
+  left: 10rem;
+  animation-delay: 10s;
 }
 
 @keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.2); }
+  66% { transform: translate(-30px, 50px) scale(0.9); }
+}
+
+/* Main glassy card */
+.main-card {
+  position: relative;
+  z-index: 10;
+  max-width: 850px;
+  width: 100%;
+  padding: 3rem 4rem;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  color: #333;
+}
+
+/* Headings and text styling */
+.main-card h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #4c1d95; /* Deep purple tone */
+}
+
+.main-card p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  color: #444;
+}
+
+/* Buttons (optional for Recorder/Analyzer) */
+button {
+  font-size: 1.1rem;
+  padding: 1rem 5rem;
+  margin: 10px;
+  border-radius: 1rem;
+  border: none;
+  background: linear-gradient(135deg, #a78bfa, #f472b6);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  color: lightpink;
+  /* background-color: #333; */
+  /* transform: translateY(-3px); */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
