@@ -1,66 +1,59 @@
-import sys, json, os
-from transformers import pipeline
-from sentence_transformers import SentenceTransformer, util
+# ml-models/nlp_analysis.py
+import json
+import sys
+import os
+from datetime import datetime
 
-def analyze_transcript(input_file, output_file):
-    # Load transcript
-    with open(input_file, "r") as f:
-        transcript = json.load(f)
+def analyze_transcript(transcript):
+    """Fake NLP analysis — replace with your actual logic later."""
+    total_sentences = len(transcript)
+    speakers = list({entry["speaker"] for entry in transcript})
+    word_count = sum(len(entry["text"].split()) for entry in transcript)
 
-    print(f"🔍 Loaded {len(transcript)} entries from {input_file}")
+    return {
+        "summary": f"Debate involved {len(speakers)} speakers and {total_sentences} sentences.",
+        "total_speakers": len(speakers),
+        "total_sentences": total_sentences,
+        "total_words": word_count,
+        "speakers": speakers,
+        "timestamp": datetime.now().isoformat(),
+    }
 
-    # Load models
-    sentiment_model = pipeline("sentiment-analysis")
-    emotion_model = pipeline(
-        "text-classification",
-        model="j-hartmann/emotion-english-distilroberta-base",
-        return_all_scores=True
-    )
-    semantic_model = SentenceTransformer("all-MiniLM-L6-v2")
-
-    # Make a combined topic context
-    all_text = " ".join([entry["text"] for entry in transcript])
-    topic_embedding = semantic_model.encode(all_text, convert_to_tensor=True)
-
-    analyzed = []
-    for entry in transcript:
-        text = entry["text"]
-
-        # Sentiment
-        sentiment = sentiment_model(text)[0]
-
-        # Emotion
-        emotions = emotion_model(text)[0]
-        top_emotion = max(emotions, key=lambda x: x["score"])
-
-        # Relevance
-        text_embedding = semantic_model.encode(text, convert_to_tensor=True)
-        relevance = util.cos_sim(text_embedding, topic_embedding).item()
-
-        analyzed.append({
-            "speaker": entry["speaker"],
-            "text": text,
-            "sentiment": {
-                "label": sentiment["label"],
-                "score": round(sentiment["score"], 2)
-            },
-            "emotion": {
-                "label": top_emotion["label"].lower(),
-                "score": round(top_emotion["score"], 2)
-            },
-            "relevance": round(relevance, 2)
-        })
-
-    # Save JSON file
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    with open(output_file, "w") as f:
-        json.dump(analyzed, f, indent=2)
-
-    print(f"✅ Analysis saved to {output_file}")
-
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python nlp_analysis.py <input_file> <output_file>")
+def main():
+    if len(sys.argv) < 3:
+        print("Usage: python nlp_analysis.py <input_file> <output_dir>")
         sys.exit(1)
 
-    analyze_transcript(sys.argv[1], sys.argv[2])
+    input_file = sys.argv[1]
+    output_dir = sys.argv[2]
+
+    # ✅ Check input file exists
+    if not os.path.exists(input_file):
+        print(f"❌ Input file not found: {input_file}")
+        sys.exit(1)
+
+    try:
+        with open(input_file, "r", encoding="utf-8") as f:
+            transcript = json.load(f)
+
+        # Perform mock NLP analysis
+        result = analyze_transcript(transcript)
+
+        # ✅ Ensure output dir exists
+        os.makedirs(output_dir, exist_ok=True)
+
+        # ✅ Create output file with timestamp
+        timestamp = int(datetime.now().timestamp())
+        output_file = os.path.join(output_dir, f"analyzed_transcript_{timestamp}.json")
+
+        # ✅ Save JSON
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2)
+
+        print(f"✅ Analysis saved to {output_file}")
+    except Exception as e:
+        print(f"❌ Error analyzing transcript: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
