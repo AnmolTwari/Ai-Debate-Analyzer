@@ -1,0 +1,51 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 15,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T17:15:59.590146",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Hello I am testing it right now.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.993
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.92
+      },
+      "relevance": 0.505,
+      "grammar": {
+        "errors": 0,
+        "suggestions": [],
+        "corrected_text": "Hello I am testing it right now."
+      },
+      "judgment": "\u2705 Grammatically sound. Moderately relevant to the discussion. Tone is positive and engaging."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "And I'm also helping to taste speaker one.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.994
+      },
+      "emotion": {
+        "label": "joy",
+        "score": 0.586
+      },
+      "relevance": 0.772,
+      "grammar": {
+        "errors": 0,
+        "suggestions": [],
+        "corrected_text": "And I'm also helping to taste speaker one."
+      },
+      "judgment": "\u2705 Grammatically sound. Moderately relevant to the discussion. Tone is positive and engaging. Emotionally expressive \u2014 keeps the debate lively."
+    }
+  ]
+}

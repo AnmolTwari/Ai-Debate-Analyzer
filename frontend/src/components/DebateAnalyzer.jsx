@@ -11,6 +11,7 @@ function DebateAnalyzer({ analysis, onRestart }) {
   }
 
   const details = analysis?.detailed_analysis || [];
+  const speakerSummary = analysis?.speaker_summary || {};
 
   return (
     <div className="p-6 bg-white shadow-lg rounded-2xl w-full max-w-3xl mx-auto">
@@ -57,20 +58,28 @@ function DebateAnalyzer({ analysis, onRestart }) {
               <div className="mt-3 p-3 bg-yellow-50 rounded-md text-sm">
                 <b>📝 Grammar:</b>{" "}
                 {entry.grammar?.errors === 0
-                  ? "Perfect grammar."
+                  ? "✅Perfect grammar."
                   : `${entry.grammar?.errors} issues found.`}
-                {entry.grammar?.suggestions?.length > 0 && (
-                  <ul className="list-disc list-inside text-gray-600 mt-1">
-                    {entry.grammar.suggestions.map((s, i) => (
-                      <li key={i}>{s}</li>
-                    ))}
-                  </ul>
-                )}
               </div>
 
               <div className="mt-3 p-3 bg-orange-100 rounded-md text-sm">
                 <b>💬 Judgment:</b> {entry.judgment}
               </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ----------------------------- */}
+      {/* Speaker-wise human judgment */}
+      {/* ----------------------------- */}
+      {Object.keys(speakerSummary).length > 0 && (
+        <div className="mt-6 p-4 bg-gray-200 rounded-xl">
+          <h3 className="text-xl font-bold mb-2 text-center">📊 Speaker-wise Judgments</h3>
+          {Object.entries(speakerSummary).map(([speaker, judgmentText]) => (
+            <div key={speaker} className="p-3 bg-white rounded-lg shadow-sm mb-3">
+              <p className="font-semibold">{speaker}</p>
+              <p>{judgmentText}</p>
             </div>
           ))}
         </div>

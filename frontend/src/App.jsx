@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState } from "react";
 import DebateRecorder from "./components/DebateRecorder.jsx";
 import DebateAnalyzer from "./components/DebateAnalyzer.jsx";
@@ -7,21 +6,40 @@ import "./App.css";
 function App() {
   const [transcript, setTranscript] = useState([]);
   const [showAnalyzer, setShowAnalyzer] = useState(false);
-  const [analysis, setAnalysis] = useState(null); // 🧠 new state for analysis data
+  const [analysis, setAnalysis] = useState(null);
+  const [topic, setTopic] = useState("");
 
-  // When debate ends (recording finished)
-  const handleDebateEnd = () => setShowAnalyzer(true);
+  // When debate ends
+  const handleDebateEnd = async () => {
+    if (!topic.trim()) {
+      alert("Please enter a topic before analyzing!");
+      return;
+    }
 
-  // When restarting debate
+    try {
+      const res = await fetch("http://localhost:5000/api/save-transcript", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transcript, topic }),
+      });
+      const data = await res.json();
+      if (data.analyzed) setAnalysis(data.analyzed);
+      setShowAnalyzer(true);
+    } catch (err) {
+      console.error("Error sending transcript:", err);
+    }
+  };
+
+  // Restart debate
   const handleRestart = () => {
     setTranscript([]);
     setShowAnalyzer(false);
     setAnalysis(null);
+    setTopic("");
   };
 
   return (
     <div className="app-container">
-      {/* Background Blobs */}
       <div className="background-blobs">
         <div className="blob purple"></div>
         <div className="blob yellow"></div>
@@ -31,37 +49,48 @@ function App() {
       {/* Main Glass Box */}
       <div className="main-card">
         {!showAnalyzer ? (
-          <DebateRecorder
-            transcript={transcript}
-            setTranscript={setTranscript}
-            onEndDebate={handleDebateEnd}
-            onAnalysisReady={setAnalysis}  // 🧩 new prop: receive analyzed data from backend
-          />
+          <div className="debate-recorder-container" style={{ overflow: "hidden" }}>
+            <div className="mb-4">
+              <label className="block font-semibold mb-2">🧩 Enter Debate Topic:</label>
+              <input
+                type="text"
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                placeholder="e.g., Impact of AI on Education"
+                className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <DebateRecorder
+              transcript={transcript}
+              setTranscript={setTranscript}
+              onEndDebate={handleDebateEnd}
+              onAnalysisReady={setAnalysis}
+            />
+          </div>
         ) : (
-          <DebateAnalyzer
-            analysis={analysis}  // 🧠 pass analysis directly here
-            onRestart={handleRestart}
-          />
+          <DebateAnalyzer analysis={analysis} onRestart={handleRestart} />
         )}
       </div>
 
-      {/* Transcript Box on the right */}
-      <div className="transcript-box">
-        <h3 className="font-semibold mb-2">Transcript</h3>
-        {transcript.length === 0 ? (
-          <p className="text-gray-500">No transcript yet</p>
-        ) : (
-          <ul>
-            {transcript.map((entry, index) => (
-              <li key={index}>
-                <b>{entry.speaker}:</b> {entry.text}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {/* Show Transcript Box only in DebateRecorder mode */}
+      {!showAnalyzer && (
+        <div className="transcript-box">
+          <h3 className="font-semibold mb-2">Transcript</h3>
+          {transcript.length === 0 ? (
+            <p className="text-gray-500">No transcript yet</p>
+          ) : (
+            <ul>
+              {transcript.map((entry, index) => (
+                <li key={index}>
+                  <b>{entry.speaker}:</b> {entry.text}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
-
   );
 }
 
