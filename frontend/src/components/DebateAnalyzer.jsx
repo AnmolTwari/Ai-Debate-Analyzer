@@ -37,6 +37,7 @@ function DebateAnalyzer({ analysis, onRestart }) {
               <p className="text-gray-700 mb-2">
                 <b>🗣️ Speech:</b> {entry.text}
               </p>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2 text-sm">
                 <div className="p-2 bg-green-100 rounded-md">
                   <b>Sentiment:</b>{" "}
@@ -51,6 +52,24 @@ function DebateAnalyzer({ analysis, onRestart }) {
                 <div className="p-2 bg-purple-100 rounded-md">
                   <b>Relevance:</b> {entry.relevance}
                 </div>
+              </div>
+
+              <div className="mt-3 p-3 bg-yellow-50 rounded-md text-sm">
+                <b>📝 Grammar:</b>{" "}
+                {entry.grammar?.errors === 0
+                  ? "Perfect grammar."
+                  : `${entry.grammar?.errors} issues found.`}
+                {entry.grammar?.suggestions?.length > 0 && (
+                  <ul className="list-disc list-inside text-gray-600 mt-1">
+                    {entry.grammar.suggestions.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div className="mt-3 p-3 bg-orange-100 rounded-md text-sm">
+                <b>💬 Judgment:</b> {entry.judgment}
               </div>
             </div>
           ))}
