@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState } from "react";
 import DebateRecorder from "./components/DebateRecorder.jsx";
 import DebateAnalyzer from "./components/DebateAnalyzer.jsx";
@@ -7,12 +6,12 @@ import "./App.css";
 function App() {
   const [transcript, setTranscript] = useState([]);
   const [showAnalyzer, setShowAnalyzer] = useState(false);
-  const [analysis, setAnalysis] = useState(null); // 🧠 new state for analysis data
+  const [analysis, setAnalysis] = useState(null);
 
-  // When debate ends (recording finished)
+  // When debate ends
   const handleDebateEnd = () => setShowAnalyzer(true);
 
-  // When restarting debate
+  // Restart debate
   const handleRestart = () => {
     setTranscript([]);
     setShowAnalyzer(false);
@@ -29,39 +28,41 @@ function App() {
       </div>
 
       {/* Main Glass Box */}
-      <div className="main-card">
+      <div
+        className={`main-card ${
+          showAnalyzer ? "analyzer-mode" : "recorder-mode"
+        }`}
+      >
         {!showAnalyzer ? (
           <DebateRecorder
             transcript={transcript}
             setTranscript={setTranscript}
             onEndDebate={handleDebateEnd}
-            onAnalysisReady={setAnalysis}  // 🧩 new prop: receive analyzed data from backend
+            onAnalysisReady={setAnalysis}
           />
         ) : (
-          <DebateAnalyzer
-            analysis={analysis}  // 🧠 pass analysis directly here
-            onRestart={handleRestart}
-          />
+          <DebateAnalyzer analysis={analysis} onRestart={handleRestart} />
         )}
       </div>
 
-      {/* Transcript Box on the right */}
-      <div className="transcript-box">
-        <h3 className="font-semibold mb-2">Transcript</h3>
-        {transcript.length === 0 ? (
-          <p className="text-gray-500">No transcript yet</p>
-        ) : (
-          <ul>
-            {transcript.map((entry, index) => (
-              <li key={index}>
-                <b>{entry.speaker}:</b> {entry.text}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {/* ✅ Show Transcript Box only in DebateRecorder mode */}
+      {!showAnalyzer && (
+        <div className="transcript-box">
+          <h3 className="font-semibold mb-2">Transcript</h3>
+          {transcript.length === 0 ? (
+            <p className="text-gray-500">No transcript yet</p>
+          ) : (
+            <ul>
+              {transcript.map((entry, index) => (
+                <li key={index}>
+                  <b>{entry.speaker}:</b> {entry.text}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
-
   );
 }
 

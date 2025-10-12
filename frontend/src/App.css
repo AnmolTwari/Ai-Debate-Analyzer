@@ -6,10 +6,11 @@
   align-items: flex-start;
   justify-content: center;
   background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4);
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 2rem;
   font-family: "Poppins", sans-serif;
   gap: 2rem; /* space between main card and transcript box */
+
 }
 
 /* Main glassy card (controls) */
@@ -27,6 +28,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+}
+/* ============================
+   Recorder Mode Styles
+============================ */
+.main-card.recorder-mode {
+  overflow: hidden;
+  /* background: rgba(255, 255, 255, 0.35); */
+  backdrop-filter: blur(25px);
+  transition: all 0.4s ease;
+}
+
+/* ============================
+   Analyzer Mode Styles
+============================ */
+.main-card.analyzer-mode {
+  /* overflow-y: auto; */
+  /* background: rgba(255, 255, 255, 0.9); */
+  backdrop-filter: blur(10px);
+  /* max-height: 900px; */
+  max-width: 900px;
+  transition: all 0.4s ease;
 }
 
 /* Transcript box (outside main-card) */

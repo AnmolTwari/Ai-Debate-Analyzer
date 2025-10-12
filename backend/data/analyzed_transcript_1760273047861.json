@@ -1,0 +1,31 @@
+{
+  "summary": "Debate involved 1 speakers and 1 sentences.",
+  "total_speakers": 1,
+  "total_sentences": 1,
+  "total_words": 3,
+  "speakers": [
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T18:14:43.133620",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Hello, hello, hello.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.993
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.937
+      },
+      "relevance": 1.0,
+      "grammar": {
+        "errors": 0,
+        "suggestions": [],
+        "corrected_text": "Hello, hello, hello."
+      },
+      "judgment": "\u2705 Grammatically sound. Highly relevant to the topic. Tone is positive and engaging."
+    }
+  ]
+}

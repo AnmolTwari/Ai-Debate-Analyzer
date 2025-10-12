@@ -1,0 +1,108 @@
+{
+  "summary": "Debate involved 2 speakers and 5 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 5,
+  "total_words": 60,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T17:23:31.523001",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Cars are one of the best modes of truck.",
+      "sentiment": {
+        "label": "positive",
+        "score": 1.0
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.87
+      },
+      "relevance": 0.473,
+      "grammar": {
+        "errors": 1,
+        "suggestions": [],
+        "corrected_text": "Wars are one of the best modes of truck."
+      },
+      "judgment": "\u26a0\ufe0f Minor grammatical issues. Seems off-topic or loosely related. Tone is positive and engaging."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "Cars produce so much pollution, they are too bad we should not use them.",
+      "sentiment": {
+        "label": "negative",
+        "score": 1.0
+      },
+      "emotion": {
+        "label": "disgust",
+        "score": 0.833
+      },
+      "relevance": 0.719,
+      "grammar": {
+        "errors": 1,
+        "suggestions": [],
+        "corrected_text": "Wars produce so much pollution, they are too bad we should not use them."
+      },
+      "judgment": "\u26a0\ufe0f Minor grammatical issues. Moderately relevant to the discussion. Tone is negative \u2014 might appear critical or defensive. Try to sound more composed or objective."
+    },
+    {
+      "speaker": "Speaker 1",
+      "text": "You're just a lying *******. You don't have any.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.999
+      },
+      "emotion": {
+        "label": "anger",
+        "score": 0.55
+      },
+      "relevance": 0.375,
+      "grammar": {
+        "errors": 0,
+        "suggestions": [],
+        "corrected_text": "You're just a lying *******. You don't have any."
+      },
+      "judgment": "\u2705 Grammatically sound. Seems off-topic or loosely related. Tone is negative \u2014 might appear critical or defensive. Try to sound more composed or objective."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "Why can how can you abuse me? I said cars are not good. What is the what is wrong in that?",
+      "sentiment": {
+        "label": "negative",
+        "score": 1.0
+      },
+      "emotion": {
+        "label": "anger",
+        "score": 0.686
+      },
+      "relevance": 0.811,
+      "grammar": {
+        "errors": 1,
+        "suggestions": [],
+        "corrected_text": "Why can how can you abuse me? I said cars are not good. That is the what is wrong in that?"
+      },
+      "judgment": "\u26a0\ufe0f Minor grammatical issues. Highly relevant to the topic. Tone is negative \u2014 might appear critical or defensive. Try to sound more composed or objective."
+    },
+    {
+      "speaker": "Speaker 1",
+      "text": "**** you ***** you're not a human.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.999
+      },
+      "emotion": {
+        "label": "anger",
+        "score": 0.511
+      },
+      "relevance": 0.346,
+      "grammar": {
+        "errors": 0,
+        "suggestions": [],
+        "corrected_text": "**** you ***** you're not a human."
+      },
+      "judgment": "\u2705 Grammatically sound. Seems off-topic or loosely related. Tone is negative \u2014 might appear critical or defensive. Try to sound more composed or objective."
+    }
+  ]
+}
