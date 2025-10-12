@@ -1,8 +1,10 @@
-/* index.css */
-
-/* Basic reset */
-body {
+/* Make html and body full screen and prevent scrolling */
+html, body {
+  height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  /* overflow: hidden; Prevent scrolling */
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   background-color: #f8fafc;
@@ -12,6 +14,11 @@ body {
 /* Center App */
 .App {
   text-align: center;
-  min-height: 100vh;
+  height: 100%; /* Fill entire screen */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
+  box-sizing: border-box;
 }
