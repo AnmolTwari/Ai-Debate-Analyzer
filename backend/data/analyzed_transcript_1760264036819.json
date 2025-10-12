@@ -1,0 +1,39 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 6,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T15:44:13.293496",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "this is test",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.995
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.902
+      },
+      "relevance": 0.933
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "test this is",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.866
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.812
+      },
+      "relevance": 0.834
+    }
+  ]
+}

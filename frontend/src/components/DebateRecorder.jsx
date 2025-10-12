@@ -1,7 +1,7 @@
 // src/components/DebateRecorder.jsx
 import React, { useState, useRef } from "react";
 
-function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
+function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisReady }) {
   const [numSpeakers, setNumSpeakers] = useState(2);
   const [activeSpeaker, setActiveSpeaker] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,7 +12,6 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
       alert("Speech Recognition not supported in this browser. Try Chrome desktop.");
       return;
     }
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
@@ -38,7 +37,6 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
     };
 
     recognition.onend = () => setActiveSpeaker(null);
-
     recognitionRef.current = recognition;
     recognition.start();
   };
@@ -57,8 +55,12 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to save transcript");
 
-      console.log("Transcript saved:", data);
-      alert("✅ Transcript saved successfully!");
+      console.log("✅ Transcript saved and analyzed:", data);
+      alert("✅ Transcript analyzed successfully!");
+
+      // Pass analyzed data to the analyzer screen
+      if (onAnalysisReady) onAnalysisReady(data.analyzed);
+
       onEndDebate();
     } catch (err) {
       console.error("Error saving transcript:", err);
@@ -74,7 +76,6 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
     <div className="p-6 text-center">
       <h2 className="text-2xl font-bold mb-4">AI Debate Analyzer</h2>
 
-      {/* Speaker count selector */}
       <div className="mb-4">
         <label className="font-medium mr-2">Select number of speakers:</label>
         <select
@@ -83,32 +84,28 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
           className="border rounded p-2"
         >
           {[2, 3, 4, 5, 6].map((n) => (
-            <option key={n} value={n}>{n}</option>
+            <option key={n} value={n}>
+              {n}
+            </option>
           ))}
         </select>
       </div>
 
-      {/* Dynamic speaker buttons */}
       <div className="flex justify-center flex-wrap gap-4 mb-6">
-        {Array.from({ length: numSpeakers }, (_, i) => `Speaker ${i + 1}`).map(
-          (speaker) => (
-            <button
-              key={speaker}
-              onClick={() => startRecognition(speaker)}
-              disabled={activeSpeaker !== null || loading}
-              className={`px-4 py-2 rounded-lg text-white ${
-                activeSpeaker === speaker
-                  ? "bg-gray-400"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
-            >
-              🎙️ {speaker}
-            </button>
-          )
-        )}
+        {Array.from({ length: numSpeakers }, (_, i) => `Speaker ${i + 1}`).map((speaker) => (
+          <button
+            key={speaker}
+            onClick={() => startRecognition(speaker)}
+            disabled={activeSpeaker !== null || loading}
+            className={`px-4 py-2 rounded-lg text-white ${
+              activeSpeaker === speaker ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            🎙️ {speaker}
+          </button>
+        ))}
       </div>
 
-      {/* Transcript display */}
       <div className="bg-gray-100 p-4 rounded-lg text-left max-w-lg mx-auto">
         <h3 className="font-semibold mb-2">Transcript:</h3>
         {transcript.length === 0 ? (
@@ -124,7 +121,6 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
         )}
       </div>
 
-      {/* Buttons */}
       <div className="mt-4 flex gap-4 justify-center">
         <button
           onClick={saveTranscript}
@@ -133,9 +129,8 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
             loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
           }`}
         >
-          {loading ? "Saving..." : "💾 Save Transcript"}
+          {loading ? "Saving..." : "💾 Save & Analyze"}
         </button>
-
         <button
           onClick={clearTranscript}
           className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"

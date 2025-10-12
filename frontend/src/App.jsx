@@ -7,11 +7,16 @@ import "./App.css";
 function App() {
   const [transcript, setTranscript] = useState([]);
   const [showAnalyzer, setShowAnalyzer] = useState(false);
+  const [analysis, setAnalysis] = useState(null); // 🧠 new state for analysis data
 
+  // When debate ends (recording finished)
   const handleDebateEnd = () => setShowAnalyzer(true);
+
+  // When restarting debate
   const handleRestart = () => {
     setTranscript([]);
     setShowAnalyzer(false);
+    setAnalysis(null);
   };
 
   return (
@@ -30,9 +35,13 @@ function App() {
             transcript={transcript}
             setTranscript={setTranscript}
             onEndDebate={handleDebateEnd}
+            onAnalysisReady={setAnalysis}  // 🧩 new prop: receive analyzed data from backend
           />
         ) : (
-          <DebateAnalyzer onRestart={handleRestart} />
+          <DebateAnalyzer
+            analysis={analysis}  // 🧠 pass analysis directly here
+            onRestart={handleRestart}
+          />
         )}
       </div>
     </div>

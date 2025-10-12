@@ -1,0 +1,39 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 11,
+  "speakers": [
+    "Speaker 1",
+    "Speaker 2"
+  ],
+  "timestamp": "2025-10-12T15:51:22.932803",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "show the fact of the matter is",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.987
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.857
+      },
+      "relevance": 0.62
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "this is speaker to",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.996
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.654
+      },
+      "relevance": 0.674
+    }
+  ]
+}

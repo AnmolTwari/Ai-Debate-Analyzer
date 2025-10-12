@@ -1,0 +1,39 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 17,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T15:54:13.187520",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "so there's a song named bumro",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.995
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.529
+      },
+      "relevance": 0.734
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "and in that song the girl says gand mara ke bhoomaro",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.747
+      },
+      "emotion": {
+        "label": "joy",
+        "score": 0.547
+      },
+      "relevance": 0.84
+    }
+  ]
+}
