@@ -96,11 +96,10 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
               key={speaker}
               onClick={() => startRecognition(speaker)}
               disabled={activeSpeaker !== null || loading}
-              className={`px-4 py-2 rounded-lg text-white ${
-                activeSpeaker === speaker
+              className={`px-4 py-2 rounded-lg text-white ${activeSpeaker === speaker
                   ? "bg-gray-400"
                   : "bg-blue-600 hover:bg-blue-700"
-              }`}
+                }`}
             >
               🎙️ {speaker}
             </button>
@@ -116,7 +115,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
         ) : (
           <ul>
             {transcript.map((entry, index) => (
-              <li key={index}>
+              <li key={index} className={`speaker-${entry.speaker.split(' ')[1]}`}>
                 <b>{entry.speaker}:</b> {entry.text}
               </li>
             ))}
@@ -129,9 +128,8 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate }) {
         <button
           onClick={saveTranscript}
           disabled={loading || transcript.length === 0}
-          className={`px-4 py-2 rounded-lg text-white ${
-            loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
-          }`}
+          className={`px-4 py-2 rounded-lg text-white ${loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
+            }`}
         >
           {loading ? "Saving..." : "💾 Save Transcript"}
         </button>

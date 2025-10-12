@@ -1,97 +1,87 @@
-/* src/App.css */
-
 /* Full-page container */
 .app-container {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4);
   overflow: hidden;
   padding: 2rem;
   font-family: "Poppins", sans-serif;
+  gap: 2rem; /* space between main card and transcript box */
 }
 
-/* Animated background blobs */
-.background-blobs {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  width: 22rem;
-  height: 22rem;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.7;
-  animation: blob 20s infinite;
-}
-
-.blob.purple {
-  background-color: #d8b4fe;
-  top: -8rem;
-  right: -8rem;
-}
-
-.blob.yellow {
-  background-color: #fde68a;
-  bottom: -8rem;
-  left: -8rem;
-  animation-delay: 5s;
-}
-
-.blob.pink {
-  background-color: #f9a8d4;
-  top: 12rem;
-  left: 10rem;
-  animation-delay: 10s;
-}
-
-@keyframes blob {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(40px, -60px) scale(1.2); }
-  66% { transform: translate(-30px, 50px) scale(0.9); }
-}
-
-/* Main glassy card */
+/* Main glassy card (controls) */
 .main-card {
   position: relative;
   z-index: 10;
-  max-width: 850px;
+  max-width: 450px;
   width: 100%;
-  padding: 3rem 4rem;
+  padding: 2rem;
   border-radius: 2rem;
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(25px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  text-align: center;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Headings and text styling */
-.main-card h1 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #4c1d95; /* Deep purple tone */
+/* Transcript box (outside main-card) */
+.transcript-box {
+  flex: 1;
+  max-width: 400px;
+  width: 100%;
+  height: 80vh;                 /* Fixed height for chat container */
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;             /* Scrollable inside */
+  scroll-behavior: smooth;      /* Smooth scrolling for new messages */
 }
 
-.main-card p {
-  font-size: 1.2rem;
-  line-height: 1.7;
-  margin-bottom: 2rem;
-  color: #444;
+/* Messages container */
+.transcript-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;                 /* Space between messages */
 }
 
-/* Buttons (optional for Recorder/Analyzer) */
+/* Individual messages */
+.transcript-box li {
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border-radius: 0.75rem;
+  word-wrap: break-word;
+  max-width: 85%;              /* Prevent overly wide bubbles */
+}
+
+/* Optional: alternating colors for speakers */
+.transcript-box li:nth-child(odd) {
+  background: #e0f7fa;
+  align-self: flex-start;
+}
+
+.transcript-box li:nth-child(even) {
+  background: #fce4ec;
+  align-self: flex-end;
+}
+
+
+/* Buttons */
 button {
   font-size: 1.1rem;
-  padding: 1rem 5rem;
-  margin: 10px;
+  padding: 0.75rem 2rem;
+  margin: 5px;
   border-radius: 1rem;
   border: none;
   background: linear-gradient(135deg, #a78bfa, #f472b6);
@@ -103,7 +93,5 @@ button {
 
 button:hover {
   color: lightpink;
-  /* background-color: #333; */
-  /* transform: translateY(-3px); */
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }

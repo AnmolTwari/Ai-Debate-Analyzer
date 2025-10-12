@@ -1,0 +1,39 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 33,
+  "speakers": [
+    "Speaker 1",
+    "Speaker 2"
+  ],
+  "timestamp": "2025-10-12T15:26:12.425157",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Again I wanted to try it and if it will be OK then I will be so happy and so I can do any work.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.999
+      },
+      "emotion": {
+        "label": "joy",
+        "score": 0.983
+      },
+      "relevance": 0.822
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "OK, so I hope it will be run.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.995
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.867
+      },
+      "relevance": 0.682
+    }
+  ]
+}

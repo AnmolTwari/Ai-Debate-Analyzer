@@ -35,7 +35,24 @@ function App() {
           <DebateAnalyzer onRestart={handleRestart} />
         )}
       </div>
+
+      {/* Transcript Box on the right */}
+      <div className="transcript-box">
+        <h3 className="font-semibold mb-2">Transcript</h3>
+        {transcript.length === 0 ? (
+          <p className="text-gray-500">No transcript yet</p>
+        ) : (
+          <ul>
+            {transcript.map((entry, index) => (
+              <li key={index}>
+                <b>{entry.speaker}:</b> {entry.text}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
+
   );
 }
 
