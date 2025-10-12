@@ -1,4 +1,3 @@
-// backend/server.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -11,24 +10,16 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const PORT = 5000;
-
-// --------------------
-// Data directory
-// --------------------
 const dataDir = path.join(__dirname, "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
 
-// Health check
 app.get("/", (req, res) => res.send("✅ AI Debate Analyzer backend is running!"));
 
-// --------------------
 // Save transcript + run NLP analysis
-// --------------------
 app.post("/api/save-transcript", (req, res) => {
   try {
     const { transcript } = req.body;
 
-    // Validate payload
     if (!transcript || !Array.isArray(transcript) || transcript.length === 0) {
       return res.status(400).json({ error: "Transcript empty or invalid" });
     }
@@ -40,43 +31,46 @@ app.post("/api/save-transcript", (req, res) => {
       }
     }
 
-    const transcriptFile = path.join(dataDir, "transcript.json");
-    const analyzedFile = path.join(dataDir, "analyzed_transcript.json");
+    const timestamp = Date.now();
+    const transcriptFile = path.join(dataDir, `transcript_${timestamp}.json`);
+    const analyzedFile = path.join(dataDir, `analyzed_transcript_${timestamp}.json`);
 
-    // Save raw transcript
     fs.writeFileSync(transcriptFile, JSON.stringify(transcript, null, 2));
     console.log("✅ Transcript saved:", transcriptFile);
 
-    // Send immediate response (frontend doesn’t wait)
     res.status(200).json({
       message: "Transcript saved successfully",
-      analyzedFile: path.basename(analyzedFile),
+      transcriptFile: path.basename(transcriptFile),
+      analyzedFile: path.basename(analyzedFile)
     });
 
-    // --------------------
-    // Run Python NLP script asynchronously
-    // --------------------
     console.log("🧠 Starting NLP analysis...");
     const scriptPath = path.join(__dirname, "ml-models", "nlp_analysis.py");
 
-    const py = spawn("python", [scriptPath, transcriptFile, dataDir]);
+    // Run Python NLP script asynchronously
+    const py = spawn("python", [scriptPath, transcriptFile, dataDir, timestamp.toString()]);
 
-    py.stdout.on("data", (data) => {
-      console.log("🐍 PYTHON OUT:", data.toString());
-    });
 
-    py.stderr.on("data", (data) => {
-      console.error("❌ PYTHON ERROR:", data.toString());
-    });
+    py.stdout.on("data", (data) => console.log("🐍 PYTHON OUT:", data.toString()));
+    py.stderr.on("data", (data) => console.error("❌ PYTHON ERROR:", data.toString()));
 
     py.on("close", (code) => {
-      console.log(`✅ Python process exited with code ${code}`);
-      if (fs.existsSync(analyzedFile)) {
-        console.log("✅ Analyzed transcript saved at:", analyzedFile);
-      } else {
-        console.error("⚠️ No analyzed transcript found. Check Python logs above.");
-      }
-    });
+  console.log(`✅ Python process exited with code ${code}`);
+
+  // Wait a small delay to ensure file is fully written
+  setTimeout(() => {
+    const files = fs.readdirSync(dataDir)
+      .filter(f => f.startsWith("analyzed_transcript_") && f.endsWith(".json"))
+      .sort()
+      .reverse();
+
+    if (files.length === 0) {
+      console.error("⚠️ No analyzed transcript found. Check Python logs above.");
+    } else {
+      console.log("✅ Latest analyzed transcript saved at:", path.join(dataDir, files[0]));
+    }
+  }, 500); // half-second delay
+});
 
   } catch (err) {
     console.error("❌ Failed to save transcript:", err.message);
@@ -84,22 +78,27 @@ app.post("/api/save-transcript", (req, res) => {
   }
 });
 
-// --------------------
-// Get analyzed transcript
-// --------------------
+// Get latest analyzed transcript
 app.get("/api/analyze-transcript", (req, res) => {
-  const analyzedFile = path.join(dataDir, "analyzed_transcript.json");
+  const files = fs.readdirSync(dataDir)
+    .filter(f => f.startsWith("analyzed_transcript_") && f.endsWith(".json"))
+    .sort()
+    .reverse();
 
-  if (!fs.existsSync(analyzedFile)) {
+  if (files.length === 0) {
     return res.status(404).json({ error: "No analyzed transcript yet" });
   }
 
-  console.log("📂 Returning analyzed transcript:", analyzedFile);
-  const analyzed = JSON.parse(fs.readFileSync(analyzedFile, "utf-8"));
-  res.json(analyzed);
+  const latestFile = path.join(dataDir, files[0]);
+  console.log("📂 Returning latest analyzed transcript:", latestFile);
+
+  try {
+    const analyzed = JSON.parse(fs.readFileSync(latestFile, "utf-8"));
+    res.json(analyzed);
+  } catch (err) {
+    console.error("❌ Failed to read analyzed transcript:", err);
+    res.status(500).json({ error: "Failed to read analyzed transcript" });
+  }
 });
 
-// --------------------
-app.listen(PORT, () =>
-  console.log(`✅ Backend running at http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`✅ Backend running at http://localhost:${PORT}`));
