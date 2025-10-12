@@ -107,7 +107,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
 </div>
 
 
-      <div className="bg-gray-100 p-4 rounded-lg text-left max-w-lg mx-auto">
+      {/* <div className="bg-gray-100 p-4 rounded-lg text-left max-w-lg mx-auto">
         <h3 className="font-semibold mb-2">Transcript:</h3>
         {transcript.length === 0 ? (
           <p className="text-gray-500">No transcript yet</p>
@@ -120,7 +120,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
             ))}
           </ul>
         )}
-      </div>
+      </div> */}
 
       <div className="mt-4 flex gap-4 justify-center">
         <button
