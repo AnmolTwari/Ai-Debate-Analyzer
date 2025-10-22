@@ -1,0 +1,53 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 22,
+  "speakers": [
+    "Speaker 1",
+    "Speaker 2"
+  ],
+  "timestamp": "2025-10-13T10:35:20.873968",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "I think climate change is real. I know it's real 'cause I've read it in a book.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.982
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.66
+      },
+      "relevance": 0.601,
+      "grammar": {
+        "errors": 0,
+        "corrected_text": "I think climate change is real. I know it's real 'cause I've read it in a book."
+      },
+      "judgment": "Impressive clarity \u2014 not a single typo or awkward phrasing in sight. Fairly relevant overall, though a few tangents sneak in. You come across as upbeat and engaging. It adds life to your response. Emotionally steady \u2014 well-balanced delivery overall."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "You ******* ***** you're lying.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.969
+      },
+      "emotion": {
+        "label": "anger",
+        "score": 0.781
+      },
+      "relevance": 0.089,
+      "grammar": {
+        "errors": 0,
+        "corrected_text": "You ******* ***** you're lying."
+      },
+      "judgment": "Impressive clarity \u2014 not a single typo or awkward phrasing in sight. Not entirely on theme \u2014 refocusing would make it more coherent. Your phrasing feels a bit harsh. Maybe soften the edges a little? Emotion runs high here \u2014 pulling back slightly could make it more persuasive. Critical tone plus low relevance makes it sound disconnected \u2014 refocus your argument."
+    }
+  ],
+  "speaker_summary": {
+    "Speaker 1": "Grammar is spotless \u2014 beautifully written sentences. You\u2019re mostly on track, though some parts could stick closer to the theme.",
+    "Speaker 2": "Not a single grammatical flaw; it\u2019s all very natural. Some contributions feel detached from the core theme \u2014 try re-anchoring them."
+  }
+}

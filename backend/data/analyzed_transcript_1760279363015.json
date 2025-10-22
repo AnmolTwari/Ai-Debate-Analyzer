@@ -1,0 +1,53 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 33,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T19:59:42.501230",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Hello, hello, hello, I am Anmol Tiwari and I am here to represent our project and I wanted to talk about our product.",
+      "sentiment": {
+        "label": "positive",
+        "score": 0.999
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.63
+      },
+      "relevance": 0.705,
+      "grammar": {
+        "errors": 0,
+        "corrected_text": "Hello, hello, hello, I am Anmol Tiwari and I am here to represent our project and I wanted to talk about our product."
+      },
+      "judgment": "Your phrasing flows effortlessly \u2014 not a single grammatical hitch. Your ideas connect to the topic, but could use a bit more precision in parts. Your tone feels warm and confident \u2014 it\u2019s pleasant to read. Controlled emotion \u2014 maintains a professional tone."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "So our product is like AI debate, analysis and for.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.997
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.963
+      },
+      "relevance": 0.812,
+      "grammar": {
+        "errors": 2,
+        "corrected_text": "To our product is like of debate, analysis and for."
+      },
+      "judgment": "A couple of minor grammar slips, but the message still shines through. You stayed right on point \u2014 every word ties beautifully into the topic. The tone leans critical \u2014 might sound defensive if not balanced. Even-tempered expression \u2014 clear without being flat."
+    }
+  ],
+  "speaker_summary": {
+    "Speaker 2": "A few grammatical quirks show up, but your intent stays clear. You stay laser-focused on the discussion \u2014 every point feels purposeful.",
+    "Speaker 1": "Not a single grammatical flaw; it\u2019s all very natural. You\u2019re mostly on track, though some parts could stick closer to the theme."
+  }
+}

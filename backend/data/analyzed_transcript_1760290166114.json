@@ -1,0 +1,53 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 26,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-12T22:59:44.689407",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Hello. Hello. It's last testing for me for tonight. It is 1210 and 2025.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.549
+      },
+      "emotion": {
+        "label": "neutral",
+        "score": 0.877
+      },
+      "relevance": 0.964,
+      "grammar": {
+        "errors": 0,
+        "corrected_text": "Hello. Hello. It's last testing for me for tonight. It is 1210 and 2025."
+      },
+      "judgment": "Flawless grammar. Everything reads clean and natural. You stayed right on point \u2014 every word ties beautifully into the topic. The tone leans critical \u2014 might sound defensive if not balanced. Emotionally steady \u2014 well-balanced delivery overall."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "I'm also happy to summarize it and also wanted to submit it.",
+      "sentiment": {
+        "label": "positive",
+        "score": 1.0
+      },
+      "emotion": {
+        "label": "joy",
+        "score": 0.987
+      },
+      "relevance": 0.243,
+      "grammar": {
+        "errors": 0,
+        "corrected_text": "I'm also happy to summarize it and also wanted to submit it."
+      },
+      "judgment": "Your phrasing flows effortlessly \u2014 not a single grammatical hitch. This section wanders off-topic; try anchoring it closer to the core discussion. Positive tone all around \u2014 it draws the reader in naturally. Joyful and lively delivery \u2014 really adds character to your response."
+    }
+  ],
+  "speaker_summary": {
+    "Speaker 2": "Not a single grammatical flaw; it\u2019s all very natural. Some contributions feel detached from the core theme \u2014 try re-anchoring them.",
+    "Speaker 1": "Fluent and clean. It\u2019s a pleasure to read your phrasing. You consistently bring the conversation back to the main idea. Nicely done."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "summary": "Debate involved 2 speakers and 2 sentences.",
+  "total_speakers": 2,
+  "total_sentences": 2,
+  "total_words": 68,
+  "speakers": [
+    "Speaker 2",
+    "Speaker 1"
+  ],
+  "timestamp": "2025-10-21T20:05:27.118936",
+  "detailed_analysis": [
+    {
+      "speaker": "Speaker 1",
+      "text": "Hi bro, let's start with our topic that is AI in this era. I wanted to see, I wanted to say that AI is getting worse in that time.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.995
+      },
+      "emotion": {
+        "label": "disgust",
+        "score": 0.919
+      },
+      "relevance": 0.583,
+      "grammar": {
+        "errors": 4,
+        "corrected_text": "I brow, let's start with our topic that is of in this era. I wanted to see, I wanted to say that of is getting worse in that time."
+      },
+      "judgment": "Quite a few grammar issues here \u2014 it makes the message a bit hard to follow. Your ideas connect to the topic, but could use a bit more precision in parts. Your phrasing feels a bit harsh. Maybe soften the edges a little? Emotion runs high here \u2014 pulling back slightly could make it more persuasive."
+    },
+    {
+      "speaker": "Speaker 2",
+      "text": "I'm totally agree with your point on Mole and I also wanted to suggest you something. AI is not getting worse, We are getting worse and we are not able to manage AI. That's why it's looking like worst.",
+      "sentiment": {
+        "label": "negative",
+        "score": 0.997
+      },
+      "emotion": {
+        "label": "disgust",
+        "score": 0.933
+      },
+      "relevance": 0.461,
+      "grammar": {
+        "errors": 4,
+        "corrected_text": "I'm totally agree with your point on Sole and I also wanted to suggest you something. of is not getting worse, He are getting worse and we are not able to manage of. That's why it's looking like worst."
+      },
+      "judgment": "Quite a few grammar issues here \u2014 it makes the message a bit hard to follow. This section wanders off-topic; try anchoring it closer to the core discussion. Comes off somewhat negative; try framing critiques in a more constructive tone. You sound frustrated; grounding your points in calm reasoning would help. Since it drifts off-topic and feels a bit harsh, it might come across as dismissive."
+    }
+  ],
+  "speaker_summary": {
+    "Speaker 2": "Grammar needs a bit of fine-tuning, though your ideas come through strongly. You sometimes lose sight of the topic; clearer linkage would help.",
+    "Speaker 1": "Your writing reads effortlessly \u2014 very few grammar hiccups. You\u2019re mostly on track, though some parts could stick closer to the theme."
+  }
+}
