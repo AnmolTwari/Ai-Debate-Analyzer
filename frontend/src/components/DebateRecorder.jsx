@@ -48,7 +48,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/save-transcript", {
+      const response = await fetch("https://ai-debate-analyzer-3.onrender.com/api/save-transcript", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transcript }),

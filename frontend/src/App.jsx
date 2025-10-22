@@ -17,7 +17,7 @@ function App() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/save-transcript", {
+      const res = await fetch("https://ai-debate-analyzer-3.onrender.com/api/save-transcript", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transcript, topic }),
