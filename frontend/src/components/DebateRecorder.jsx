@@ -1,4 +1,3 @@
-// src/components/DebateRecorder.jsx
 import React, { useState, useRef } from "react";
 import "../App.css"; // Ensure this imports your global CSS
 
@@ -48,7 +47,7 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
     setLoading(true);
 
     try {
-      const response = await fetch("https://ai-debate-analyzer-3.onrender.com/api/save-transcript", {
+      const response = await fetch("http://localhost:5000/api/save-transcript", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transcript }),
@@ -64,7 +63,6 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
       onEndDebate();
     } catch (err) {
       console.error("Error saving transcript:", err);
-      alert(`❌ Failed to save transcript: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -74,15 +72,16 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
 
   return (
     <div className="debate-recorder-container">
-      <div className="p-6 text-center">
-        <h2 className="text-2xl font-bold mb-4">AI Debate Analyzer</h2>
+      {/* Left Side: Controls */}
+      <div className="recorder-left">
+        <h2 className="heading">AI Debate Analyzer</h2>
 
-        <div className="mb-4">
-          <label className="font-medium mr-2">Select number of speakers:</label>
+        <div className="select-speakers">
+          <label className="label">Select number of speakers:</label>
           <select
             value={numSpeakers}
             onChange={(e) => setNumSpeakers(Number(e.target.value))}
-            className="border rounded p-2"
+            className="speaker-select"
           >
             {[2, 3, 4, 5, 6].map((n) => (
               <option key={n} value={n}>
@@ -92,18 +91,14 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
           </select>
         </div>
 
-        <div className="flex justify-center flex-wrap gap-4 mb-6">
+        <div className="speaker-buttons">
           {Array.from({ length: numSpeakers }, (_, i) => `Speaker ${i + 1}`).map(
             (speaker) => (
               <button
                 key={speaker}
                 onClick={() => startRecognition(speaker)}
                 disabled={activeSpeaker !== null || loading}
-                className={`px-4 py-2 rounded-lg text-white ${
-                  activeSpeaker === speaker
-                    ? "bg-gray-400"
-                    : "bg-blue-600 hover:bg-blue-700"
-                }`}
+                className={`speaker-btn ${activeSpeaker === speaker ? "active" : ""}`}
               >
                 🎙️ {speaker}
               </button>
@@ -111,23 +106,30 @@ function DebateRecorder({ transcript, setTranscript, onEndDebate, onAnalysisRead
           )}
         </div>
 
-        <div className="mt-4 flex gap-4 justify-center">
+        <div className="action-buttons">
           <button
             onClick={saveTranscript}
             disabled={loading || transcript.length === 0}
-            className={`px-4 py-2 rounded-lg text-white ${
-              loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
-            }`}
+            className={`save-btn ${loading ? "loading" : ""}`}
           >
             {loading ? "Saving..." : "💾 Save & Analyze"}
           </button>
-          <button
-            onClick={clearTranscript}
-            className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white"
-          >
+          <button onClick={clearTranscript} className="clear-btn">
             🗑️ Clear
           </button>
         </div>
+      </div>
+
+      {/* Right Side: Transcript Chatbox */}
+      <div className="transcript-box">
+        {transcript.map((entry, index) => (
+          <div
+            key={index}
+            className={`transcript-message ${entry.speaker ? "speaker" : ""}`}
+          >
+            <strong>{entry.speaker}:</strong> {entry.text}
+          </div>
+        ))}
       </div>
     </div>
   );

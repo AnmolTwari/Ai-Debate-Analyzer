@@ -52,7 +52,7 @@ app.post("/api/save-transcript", (req, res) => {
       if (pyError) console.error("❌ PYTHON ERROR:", pyError);
       console.log(pyOutput);
 
-      const waitForFile = (filePath, retries = 10, delay = 1000) =>
+      const waitForFile = (filePath, retries = 20, delay = 2000) =>
         new Promise((resolve, reject) => {
           let tries = 0;
           const check = () => {

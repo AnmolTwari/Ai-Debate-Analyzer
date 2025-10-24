@@ -1,120 +1,478 @@
-/* Full-page container */
-.app-container {
+/* General App Container */
+.debate-analyzer {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4);
-  /* overflow: hidden; */
+  background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4); /* Retaining your gradient theme */
   padding: 2rem;
   font-family: "Poppins", sans-serif;
-  gap: 2rem; /* space between main card and transcript box */
-
+  gap: 2rem;
 }
 
-/* Main glassy card (controls) */
-.main-card {
-  position: relative;
-  z-index: 10;
-  max-width: 450px;
-  width: 100%;
+/* Heading Styles */
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2d3748; /* Dark text color */
+}
+
+/* Loading Indicator */
+.loading-indicator {
   padding: 2rem;
-  border-radius: 2rem;
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(25px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-}
-/* ============================
-   Recorder Mode Styles
-============================ */
-.main-card.recorder-mode {
-  overflow: hidden;
-  /* background: rgba(255, 255, 255, 0.35); */
-  backdrop-filter: blur(25px);
-  transition: all 0.4s ease;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4a5568; /* Slightly muted gray for loading text */
 }
 
-/* ============================
-   Analyzer Mode Styles
-============================ */
-.main-card.analyzer-mode {
-  /* overflow-y: auto; */
-  /* background: rgba(255, 255, 255, 0.9); */
-  backdrop-filter: blur(10px);
-  /* max-height: 900px; */
-  max-width: 900px;
-  transition: all 0.4s ease;
-}
-
-/* Transcript box (outside main-card) */
-.transcript-box {
-  flex: 1;
-  max-width: 400px;
-  width: 100%;
-  height: 80vh;                 /* Fixed height for chat container */
-  background: rgba(255, 255, 255, 0.95);
-  padding: 1.5rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;             /* Scrollable inside */
-  scroll-behavior: smooth;      /* Smooth scrolling for new messages */
-}
-
-/* Messages container */
-.transcript-box ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;                 /* Space between messages */
-}
-
-/* Individual messages */
-.transcript-box li {
-  padding: 0.5rem 1rem;
-  background: #f3f4f6;
+/* Summary Card */
+.summary-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f3f4f6; /* Light background for cards */
   border-radius: 0.75rem;
-  word-wrap: break-word;
-  max-width: 85%;              /* Prevent overly wide bubbles */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Optional: alternating colors for speakers */
-.transcript-box li:nth-child(odd) {
-  background: #e0f7fa;
-  align-self: flex-start;
+.timestamp {
+  color: gray;
+  font-size: 0.875rem;
+  text-align: right;
 }
 
-.transcript-box li:nth-child(even) {
-  background: #fce4ec;
-  align-self: flex-end;
+/* No Details Message */
+.no-details {
+  text-align: center;
+  color: gray;
 }
 
+/* Details Container */
+.details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
-/* Buttons */
-button {
-  font-size: 1.1rem;
-  padding: 0.75rem 2rem;
-  margin: 5px;
-  border-radius: 1rem;
-  border: none;
-  background: linear-gradient(135deg, #a78bfa, #f472b6);
+.detail-card {
+  padding: 1rem;
+  background: #f9fafb; /* Slightly lighter background for individual details */
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.speaker-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #2b6cb0; /* Theme color for speakers */
+}
+
+.detail-text {
+  margin-top: 0.5rem;
+  color: #2d3748;
+}
+
+.metrics {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.metric {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sentiment {
+  background: #d1fae5; /* Sentiment light green */
+}
+
+.emotion {
+  background: #e0f2fe; /* Emotion light blue */
+}
+
+.relevance {
+  background: #f3e8ff; /* Relevance light purple */
+}
+
+/* Grammar and Judgment */
+.grammar, .judgment {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #fef9c3; /* Light yellow for grammar/judgment sections */
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Speaker Summary */
+.speaker-summary {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f1f5f9;
+  border-radius: 0.75rem;
+}
+
+.summary-heading {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.summary-card {
+  padding: 1rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+/* Restart Button */
+.restart-button {
+  background: linear-gradient(135deg, #a78bfa, #f472b6); /* Retaining your gradient button theme */
   color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-button:hover {
+.restart-button:hover {
   color: lightpink;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Optional: Add smooth scroll behavior for transcript box */
+.transcript-box {
+  scroll-behavior: smooth;
+}
+
+.debate-recorder-container {
+    display: flex;
+    padding: 1.5rem;
+    height: 100vh;
+    background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4);
+    font-family: "Poppins", sans-serif;
+    gap: 2rem;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Left Side - Controls */
+.recorder-left {
+    flex: 0 0 30%;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin: 0 0 1rem 0;
+    flex-shrink: 0;
+}
+
+/* Speaker Selection */
+.select-speakers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.speaker-select {
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.speaker-select:focus {
+    outline: none;
+    border-color: #4f46e5;
+}
+
+.speaker-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.speaker-btn {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 120px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 1rem;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.speaker-btn:hover:not(.active) {
+    background: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.speaker-btn.active {
+    background: #a78bfa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.save-btn, .clear-btn {
+    flex: 1;
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+/* Save Button */
+.save-btn {
+    background: #9333ea;
+    color: white;
+}
+
+.save-btn.loading {
+    background: #6b21a8;
+    cursor: wait;
+    position: relative;
+}
+
+.save-btn.loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+.save-btn:hover:not(.loading) {
+    background: #7e22ce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+
+/* Clear Button */
+.clear-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.clear-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Right Side - Transcript Chatbox */
+.transcript-box {
+    flex: 1;
+    background: #f7fafc;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 100%;
+}
+
+.transcript-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.transcript-messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-right: 0.5rem;
+}
+
+.transcript-message {
+    max-width: 75%;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    background: #e6f7ff;
+    color: #333;
+    word-wrap: break-word;
+    line-height: 1.5;
+    align-self: flex-start;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.transcript-message.speaker-1 {
+    background: #f0e6ff;
+    align-self: flex-start;
+}
+
+.transcript-message.speaker-2 {
+    background: #e0f2fe;
+    align-self: flex-end;
+}
+
+.transcript-message strong {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+/* Custom Scrollbar */
+.recorder-left::-webkit-scrollbar,
+.transcript-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.recorder-left::-webkit-scrollbar-track,
+.transcript-messages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.recorder-left::-webkit-scrollbar-thumb,
+.transcript-messages::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.recorder-left::-webkit-scrollbar-thumb:hover,
+.transcript-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .debate-recorder-container {
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .recorder-left {
+        flex: 0 0 auto;
+        width: 100%;
+        max-height: 50vh;
+    }
+
+    .transcript-box {
+        flex: 1;
+        min-height: 40vh;
+    }
+
+    .speaker-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .debate-recorder-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .recorder-left, .transcript-box {
+        padding: 1.25rem;
+    }
+
+    .heading {
+        font-size: 1.5rem;
+    }
+
+    .speaker-btn {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .save-btn, .clear-btn {
+        width: 100%;
+    }
+
+    .transcript-message {
+        max-width: 85%;
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 1.25rem;
+    }
+
+    .speaker-select,
+    .speaker-btn {
+        font-size: 1rem;
+    }
 }

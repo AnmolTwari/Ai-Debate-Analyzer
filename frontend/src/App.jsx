@@ -17,14 +17,19 @@ function App() {
     }
 
     try {
-      const res = await fetch("https://ai-debate-analyzer-3.onrender.com/api/save-transcript", {
+      const res = await fetch("http://localhost:5000/api/save-transcript", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transcript, topic }),
       });
+
       const data = await res.json();
-      if (data.analyzed) setAnalysis(data.analyzed);
-      setShowAnalyzer(true);
+      if (data.analyzed) {
+        setAnalysis(data.analyzed);  // Set the analysis data
+        setShowAnalyzer(true);  // Show the Analyzer component
+      } else {
+        console.error("Analysis data not found.");
+      }
     } catch (err) {
       console.error("Error sending transcript:", err);
     }
@@ -72,24 +77,6 @@ function App() {
           <DebateAnalyzer analysis={analysis} onRestart={handleRestart} />
         )}
       </div>
-
-      {/* Show Transcript Box only in DebateRecorder mode */}
-      {!showAnalyzer && (
-        <div className="transcript-box">
-          <h3 className="font-semibold mb-2">Transcript</h3>
-          {transcript.length === 0 ? (
-            <p className="text-gray-500">No transcript yet</p>
-          ) : (
-            <ul>
-              {transcript.map((entry, index) => (
-                <li key={index}>
-                  <b>{entry.speaker}:</b> {entry.text}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
     </div>
   );
 }
