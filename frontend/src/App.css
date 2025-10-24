@@ -157,8 +157,7 @@
 
 .debate-recorder-container {
     display: flex;
-    padding: 1.5rem;
-    height: 100vh;
+    padding: 1.6rem;
     background: linear-gradient(135deg, #d8b4fe, #fde68a, #f9a8d4);
     font-family: "Poppins", sans-serif;
     gap: 2rem;
